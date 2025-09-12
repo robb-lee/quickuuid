@@ -163,28 +163,3 @@ export function UUIDCopyButton({
     />
   );
 }
-
-// Bulk copy button for multiple UUIDs
-export function BulkCopyButton({ 
-  formattedOutput, 
-  count, 
-  onCopy 
-}: { 
-  formattedOutput: string; 
-  count: number; 
-  onCopy?: () => Promise<boolean>; 
-}) {
-  return (
-    <CopyButton
-      text={formattedOutput}
-      onCopy={onCopy}
-      variant="default"
-      successMessage={`${count} UUID${count !== 1 ? 's' : ''} copied!`}
-      errorMessage="Failed to copy UUIDs"
-      className="flex-1"
-    >
-      <Copy className="mr-2 h-4 w-4" />
-      Copy All ({count})
-    </CopyButton>
-  );
-}

@@ -2,7 +2,7 @@
  * API Contracts for UUID Generator Application
  */
 
-import { UUIDGeneratorConfig, UUIDGenerationResult, ClipboardOperation, FormatOptions } from './index';
+import { UUIDGeneratorConfig, FormatOptions } from './index';
 
 // UUID Generation API
 export interface UUIDGeneratorAPI {

@@ -11,7 +11,7 @@ import { createUUIDGenerator } from '@/lib/uuid-generator';
 import { createFormatUtils } from '@/lib/format-utils';
 import { createStorageUtils } from '@/lib/storage-utils';
 import { createClipboardUtils } from '@/lib/clipboard-utils';
-import { PerformanceUtils, PerformanceManager } from '@/lib/performance-utils';
+import { PerformanceManager } from '@/lib/performance-utils';
 import { ValidationUtils } from '@/lib/validation-utils';
 import { useScreenReader } from '@/hooks/use-screen-reader';
 import { useDebounce, useDebouncedCallback } from '@/hooks/use-debounce';
