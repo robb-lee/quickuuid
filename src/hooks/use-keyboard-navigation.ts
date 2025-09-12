@@ -124,7 +124,7 @@ export function useKeyboardNavigation(options: KeyboardNavigationOptions = {}) {
 
   return {
     // Helper function to make elements keyboard focusable
-    makeFocusable: (props: any = {}) => ({
+    makeFocusable: (props: React.HTMLAttributes<HTMLElement> = {}) => ({
       ...props,
       tabIndex: props.tabIndex ?? 0,
       role: props.role ?? 'button',

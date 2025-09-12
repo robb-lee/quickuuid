@@ -22,10 +22,8 @@ const nextConfig: NextConfig = {
   },
 
   // Bundle analyzer support
-  ...(process.env.ANALYZE === "true" && {
-    experimental: {
-      ...process.env.NODE_ENV === "production" && { bundlePagesRouterDependencies: true }
-    }
+  ...(process.env.ANALYZE === "true" && process.env.NODE_ENV === "production" && {
+    // Additional production optimizations when analyzing
   })
 };
 

@@ -52,7 +52,6 @@ export default function HomePage() {
     isKeyboardUser 
   } = useFocusManagement({
     skipLinks: true,
-    highContrastMode: true,
     restoreFocus: true
   });
 
@@ -74,7 +73,7 @@ export default function HomePage() {
   return (
     <ErrorBoundary>
       <div 
-        ref={containerRef}
+        ref={containerRef as React.RefObject<HTMLDivElement>}
         className={`min-h-screen bg-background ${isKeyboardUser ? 'js-focus-visible' : ''}`}
       >
         {/* Header */}
