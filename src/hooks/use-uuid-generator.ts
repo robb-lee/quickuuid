@@ -139,7 +139,8 @@ export function useUUIDGenerator(initialConfig?: Partial<UUIDGeneratorConfig>): 
           } catch (error) {
             // Fallback: generate single UUID if batch fails
             console.warn('Batch UUID generation failed, falling back to single UUID:', error);
-            return [uuidGenerator.generateUUIDs({ ...config, count: 1 })[0]];
+            const fallbackUUIDs = await uuidGenerator.generateUUIDs({ ...config, count: 1 });
+            return [fallbackUUIDs[0]];
           }
         }
       );

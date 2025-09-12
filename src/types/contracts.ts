@@ -80,6 +80,12 @@ export interface ClipboardAPI {
   isClipboardAvailable(): boolean;
   
   /**
+   * Check if clipboard functionality is supported
+   * Alias for isClipboardAvailable for compatibility
+   */
+  isSupported(): boolean;
+  
+  /**
    * Get fallback copy method (text selection)
    */
   fallbackCopy?(text: string): boolean;
