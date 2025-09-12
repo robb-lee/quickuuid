@@ -1,0 +1,179 @@
+/**
+ * Enhanced Focus Styles for Accessibility
+ * 
+ * Provides clear visual indicators for keyboard navigation and high contrast mode.
+ */
+
+/* Base focus styles */
+*:focus {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Enhanced focus styles for interactive elements */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+[role="button"]:focus,
+[role="switch"]:focus,
+a:focus {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px hsla(var(--ring), 0.2);
+}
+
+/* Skip links */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 6px;
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* High contrast mode styles */
+@media (prefers-contrast: high) {
+  *:focus {
+    outline: 3px solid #ffff00 !important;
+    outline-offset: 2px !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  button:focus,
+  input:focus,
+  select:focus,
+  textarea:focus,
+  [role="button"]:focus,
+  [role="switch"]:focus {
+    box-shadow: 0 0 0 5px #ffff00 !important;
+  }
+
+  .skip-link:focus {
+    background: #000000 !important;
+    color: #ffff00 !important;
+    border: 2px solid #ffff00 !important;
+  }
+}
+
+
+/* Focus indicators for specific UI components */
+.focus-indicator {
+  position: relative;
+}
+
+.focus-indicator:focus::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid hsl(var(--ring));
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+/* Keyboard-only focus (hide focus ring for mouse users) */
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.js-focus-visible .focus-visible {
+  outline: 2px solid hsl(var(--ring)) !important;
+  outline-offset: 2px !important;
+}
+
+/* Focus within containers */
+.focus-within:focus-within {
+  outline: 1px solid hsla(var(--ring), 0.5);
+  outline-offset: 2px;
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.sr-only:focus {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: inherit !important;
+  margin: inherit !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: inherit !important;
+}
+
+/* Focus trap container */
+.focus-trap {
+  isolation: isolate;
+}
+
+/* Visual feedback for interactive states */
+[aria-pressed="true"] {
+  background: hsl(var(--accent));
+}
+
+[aria-expanded="true"] {
+  background: hsl(var(--accent));
+}
+
+[aria-selected="true"] {
+  background: hsl(var(--accent));
+  outline: 2px solid hsl(var(--primary));
+}
+
+/* Loading state accessibility */
+[aria-busy="true"] {
+  cursor: wait;
+}
+
+[aria-busy="true"]:focus {
+  outline-color: hsl(var(--warning));
+}
+
+/* Error state accessibility */
+[aria-invalid="true"] {
+  outline-color: hsl(var(--destructive));
+  border-color: hsl(var(--destructive));
+}
+
+[aria-invalid="true"]:focus {
+  outline-color: hsl(var(--destructive));
+  box-shadow: 0 0 0 4px hsla(var(--destructive), 0.2);
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .skip-link {
+    transition: none;
+  }
+  
+  *:focus {
+    transition: none !important;
+    animation: none !important;
+  }
+}
