@@ -10,11 +10,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { UUIDGeneratorConfig } from "@/types";
-import { useKeyboardNavigation } from "@/hooks/use-keyboard-navigation";
 
 interface ControlPanelProps {
   config: UUIDGeneratorConfig;
@@ -37,63 +35,12 @@ export function ControlPanel({
   error,
   performanceHealth
 }: ControlPanelProps) {
-  // Keyboard shortcuts for quick toggles
-  useKeyboardNavigation({
-    onEnter: () => {
-      // If focused element is a switch, toggle it
-      const activeElement = document.activeElement as HTMLElement;
-      if (activeElement?.getAttribute('role') === 'switch') {
-        activeElement.click();
-      }
-    },
-    // Number keys for quick count setting
-    enabled: true
-  });
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    // Allow keyboard shortcuts when not typing in input
-    if (event.target !== event.currentTarget) return;
-    
-    // Number keys 1-9 for quick count setting
-    if (event.key >= '1' && event.key <= '9' && !event.ctrlKey && !event.altKey) {
-      const count = parseInt(event.key);
-      onConfigChange({ count });
-      event.preventDefault();
-    }
-    
-    // Ctrl/Cmd + letter keys for format toggles
-    if (event.ctrlKey || event.metaKey) {
-      switch (event.key.toLowerCase()) {
-        case 'h':
-          event.preventDefault();
-          onConfigChange({ includeHyphens: !config.includeHyphens });
-          break;
-        case 'b':
-          event.preventDefault();
-          onConfigChange({ includeBraces: !config.includeBraces });
-          break;
-        case 'q':
-          event.preventDefault();
-          onConfigChange({ includeQuotes: !config.includeQuotes });
-          break;
-        case 'u':
-          event.preventDefault();
-          onConfigChange({ upperCase: !config.upperCase });
-          break;
-        case ',':
-          event.preventDefault();
-          onConfigChange({ separateWithCommas: !config.separateWithCommas });
-          break;
-      }
-    }
-  };
   return (
     <Card 
       className="w-full" 
       role="form" 
       aria-labelledby="settings-title"
-      onKeyDown={handleKeyDown}
-      tabIndex={-1}
     >
       <CardHeader>
         <CardTitle id="settings-title">

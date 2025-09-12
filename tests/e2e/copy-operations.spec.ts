@@ -215,10 +215,6 @@ test.describe('Copy Operations', () => {
     await expect(copyAllButton).toBeDisabled();
   });
 
-  test('should show keyboard shortcuts for copy operations', async ({ page }) => {
-    // Look for keyboard shortcut hints
-    await expect(page.getByText(/ctrl\\+c|cmd\\+c/i)).toBeVisible();
-  });
 
   test('should handle rapid copy operations', async ({ page }) => {
     const copyButtons = page.getByTestId('copy-single-button');

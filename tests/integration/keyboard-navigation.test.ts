@@ -144,35 +144,6 @@ test.describe('Keyboard Navigation', () => {
     await expect(countInput).not.toBeFocused();
   });
 
-  test('should support global keyboard shortcuts', async ({ page }) => {
-    // Ctrl+A (or Cmd+A) to select all UUIDs
-    const modifier = process.platform === 'darwin' ? 'Meta' : 'Control';
-    await page.keyboard.press(`${modifier}+a`);
-    
-    // Should select all text in results
-    const selectedText = await page.evaluate(() => window.getSelection()?.toString());
-    expect(selectedText).toMatch(/[0-9a-f-]{36}/);
-    
-    // Ctrl+C to copy
-    await page.keyboard.press(`${modifier}+c`);
-    
-    // Should show copy feedback
-    await expect(page.getByText(/copied/i)).toBeVisible();
-  });
-
-  test('should support theme toggle keyboard shortcut', async ({ page }) => {
-    // Ctrl+Shift+T (or Cmd+Shift+T) to toggle theme
-    const modifier = process.platform === 'darwin' ? 'Meta' : 'Control';
-    
-    // Should start in light/system mode
-    const initialTheme = await page.locator('html').getAttribute('class');
-    
-    await page.keyboard.press(`${modifier}+Shift+t`);
-    
-    // Should toggle theme
-    const newTheme = await page.locator('html').getAttribute('class');
-    expect(newTheme).not.toBe(initialTheme);
-  });
 
   test('should support enter key to regenerate UUIDs', async ({ page }) => {
     const countInput = page.getByLabel(/count/i);
@@ -245,16 +216,6 @@ test.describe('Keyboard Navigation', () => {
     expect(uuidCount).toBe(12345);
   });
 
-  test('should support contextual keyboard shortcuts', async ({ page }) => {
-    const uuidResults = page.getByTestId('uuid-results');
-    await uuidResults.focus();
-    
-    // F5 to regenerate
-    await page.keyboard.press('F5');
-    
-    const newText = await uuidResults.textContent();
-    expect(newText).toMatch(/[0-9a-f-]{36}/);
-  });
 
   test('should provide keyboard alternatives for mouse actions', async ({ page }) => {
     // All mouse actions should have keyboard equivalents

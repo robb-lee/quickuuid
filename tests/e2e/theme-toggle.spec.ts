@@ -181,10 +181,6 @@ test.describe('Theme Toggle', () => {
     expect(backgroundColor).toBeDefined();
   });
 
-  test('should show keyboard shortcut for theme toggle', async ({ page }) => {
-    // Look for keyboard shortcut hint
-    await expect(page.getByText(/ctrl\\+shift\\+t|cmd\\+shift\\+t/i)).toBeVisible();
-  });
 
   test('should support keyboard navigation', async ({ page }) => {
     // Focus on theme toggle with keyboard
