@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, RefreshCw, Home, Bug } from "lucide-react";
+import { errorBoundaryLogger, clipboardLogger } from "@/lib/logger";
 
 interface Props {
   children: ReactNode;
@@ -36,7 +37,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("ErrorBoundary caught an error:", error, errorInfo);
+    errorBoundaryLogger.error("ErrorBoundary caught an error", { error, errorInfo });
     
     this.setState({
       error,
@@ -76,9 +77,9 @@ Component Stack: ${errorInfo?.componentStack}
     try {
       await navigator.clipboard.writeText(errorText);
       // Could show a toast here if toast provider is available
-      console.log("Error copied to clipboard");
+      // Successfully copied to clipboard - no logging needed in production
     } catch (err) {
-      console.error("Failed to copy error to clipboard:", err);
+      clipboardLogger.error("Failed to copy error to clipboard", err);
     }
   };
 
@@ -232,7 +233,7 @@ export function withErrorBoundary<P extends object>(
 // Hook for error reporting (to be used in functional components)
 export function useErrorHandler() {
   const handleError = (error: Error, errorInfo?: Record<string, unknown>) => {
-    console.error("Application error:", error, errorInfo);
+    errorBoundaryLogger.error("Application error", { error, errorInfo });
     
     // You could integrate with error reporting services here
     // Example: Sentry, LogRocket, Bugsnag, etc.

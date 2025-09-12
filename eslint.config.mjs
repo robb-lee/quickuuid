@@ -25,6 +25,16 @@ const eslintConfig = [
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-unused-vars": "warn",
       "react-hooks/exhaustive-deps": "warn",
+      // Prevent console usage - use logger instead
+      "no-console": "warn",
+    },
+  },
+  // Allow console in logger and benchmark tools
+  {
+    files: ["src/lib/logger.ts", "tools/**/*.js"],
+    rules: {
+      "no-console": "off",
+      "@typescript-eslint/no-require-imports": "off",
     },
   },
 ];

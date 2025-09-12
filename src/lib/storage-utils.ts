@@ -5,6 +5,7 @@
  */
 
 import { StorageAPI } from '@/types/contracts';
+import { storageLogger } from './logger';
 import { UUIDGeneratorConfig, defaultConfig, StoredPreferences } from '@/types';
 
 const STORAGE_KEY = 'uuid-generator-preferences';
@@ -31,7 +32,7 @@ class StorageUtils implements StorageAPI {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(storedPreferences));
       return true;
     } catch (error) {
-      console.warn('Failed to save preferences:', error);
+      storageLogger.warn('Failed to save preferences', error);
       return false;
     }
   }
@@ -55,7 +56,7 @@ class StorageUtils implements StorageAPI {
       // Validate and migrate if necessary
       return this.validateAndMigrate(preferences.config || {});
     } catch (error) {
-      console.warn('Failed to load preferences:', error);
+      storageLogger.warn('Failed to load preferences', error);
       return {};
     }
   }
@@ -90,7 +91,7 @@ class StorageUtils implements StorageAPI {
     try {
       localStorage.removeItem(STORAGE_KEY);
     } catch (error) {
-      console.warn('Failed to clear preferences:', error);
+      storageLogger.warn('Failed to clear preferences', error);
     }
   }
 

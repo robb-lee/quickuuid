@@ -5,6 +5,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import { storageLogger } from '@/lib/logger';
 
 export function useLocalStorage<T>(
   key: string,
@@ -21,7 +22,7 @@ export function useLocalStorage<T>(
       const item = window.localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      console.warn(`Error loading localStorage key "${key}":`, error);
+      storageLogger.warn(`Error loading localStorage key "${key}"`, error);
       return initialValue;
     }
   });
@@ -54,7 +55,7 @@ export function useLocalStorage<T>(
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
       }
     } catch (error) {
-      console.warn(`Error saving localStorage key "${key}":`, error);
+      storageLogger.warn(`Error saving localStorage key "${key}"`, error);
     }
   }, [key, storedValue, isAvailable]);
 
@@ -67,7 +68,7 @@ export function useLocalStorage<T>(
         window.localStorage.removeItem(key);
       }
     } catch (error) {
-      console.warn(`Error clearing localStorage key "${key}":`, error);
+      storageLogger.warn(`Error clearing localStorage key "${key}"`, error);
     }
   }, [key, initialValue, isAvailable]);
 
@@ -80,7 +81,7 @@ export function useLocalStorage<T>(
         try {
           setStoredValue(JSON.parse(e.newValue));
         } catch (error) {
-          console.warn(`Error parsing localStorage change for key "${key}":`, error);
+          storageLogger.warn(`Error parsing localStorage change for key "${key}"`, error);
         }
       } else if (e.key === key && e.newValue === null) {
         // Item was removed

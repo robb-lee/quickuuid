@@ -9,6 +9,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { clipboardLogger } from "@/lib/logger";
 import { useClipboard } from "@/hooks/use-clipboard";
 import { Copy, Check, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -73,7 +74,7 @@ export function CopyButton({
         throw new Error("Copy operation failed");
       }
     } catch (error) {
-      console.error("Copy failed:", error);
+      clipboardLogger.error("Copy operation failed", error);
       
       if (showToast) {
         toast.error(errorMessage || "Failed to copy to clipboard");

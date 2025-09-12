@@ -5,6 +5,7 @@
  */
 
 import { ClipboardAPI } from '@/types/contracts';
+import { clipboardLogger } from './logger';
 
 class ClipboardUtils implements ClipboardAPI {
   /**
@@ -25,7 +26,7 @@ class ClipboardUtils implements ClipboardAPI {
         return true;
       } catch (error) {
         // If clipboard API fails, try fallback immediately
-        console.warn('Clipboard API failed, trying fallback:', error);
+        clipboardLogger.warn('Clipboard API failed, trying fallback', error);
       }
     }
 
@@ -105,7 +106,7 @@ class ClipboardUtils implements ClipboardAPI {
       
       return successful;
     } catch (error) {
-      console.warn('Fallback copy failed:', error);
+      clipboardLogger.warn('Fallback copy failed', error);
       return false;
     }
   };

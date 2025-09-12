@@ -24,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "QuickUUID",
+    default: "QuickUUID - Fast, secure, and customizable UUID generation",
     template: "%s | QuickUUID"
   },
   description: "Fast, secure, and customizable UUID generator with real-time formatting, copy functionality, and dark mode support.",
@@ -70,11 +70,14 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  manifest: "/site.webmanifest",
-  icons: {
-    icon: [{ url: "/icon" }],
-    apple: [{ url: "/apple-icon" }],
-  },
+  icons: [
+    { rel: "icon", type: "image/x-icon", url: "/favicon.ico" },
+    { rel: "icon", type: "image/png", sizes: "32x32", url: "/favicon-32x32.png" },
+    { rel: "icon", type: "image/png", sizes: "16x16", url: "/favicon-16x16.png" },
+    { rel: "apple-touch-icon", sizes: "180x180", url: "/apple-touch-icon.png" },
+    { rel: "icon", type: "image/png", sizes: "192x192", url: "/android-chrome-192x192.png" },
+    { rel: "icon", type: "image/png", sizes: "512x512", url: "/android-chrome-512x512.png" },
+  ],
 };
 
 export const viewport: Viewport = {

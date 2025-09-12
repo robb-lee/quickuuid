@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Copy, Check, Download, RotateCcw } from "lucide-react";
 import { CopyButton } from "@/components/copy-button";
+import { clipboardLogger } from "@/lib/logger";
 import { VirtualizedUUIDList } from "@/components/virtualized-uuid-list";
 import { createFormatUtils } from "@/lib/format-utils";
 
@@ -76,7 +77,7 @@ export function ResultDisplay({
       }
       return success;
     } catch (error) {
-      console.error('handleCopyAll error:', error);
+      clipboardLogger.error('Failed to copy all UUIDs', error);
       return false;
     }
   };

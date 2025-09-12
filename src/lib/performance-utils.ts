@@ -5,6 +5,7 @@
  */
 
 import { PerformanceMetrics } from '@/types';
+import { performanceLogger } from './logger';
 
 export interface PerformanceAlert {
   type: 'warning' | 'error';
@@ -101,7 +102,7 @@ class PerformanceMonitor {
     const timing = this.activeTimings.get(timingId);
     
     if (!timing) {
-      console.warn(`No active timing found for ID: ${timingId}`);
+      performanceLogger.warn(`No active timing found for ID: ${timingId}`);
       return 0;
     }
 
@@ -141,11 +142,9 @@ class PerformanceMonitor {
    * Log performance metrics
    */
   logMetrics(metrics: PerformanceMetrics): void {
-    console.log(`Performance: ${metrics.operation} took ${metrics.duration.toFixed(2)}ms`, {
-      operation: metrics.operation,
+    performanceLogger.log(`${metrics.operation} took ${metrics.duration.toFixed(2)}ms`, {
       duration: metrics.duration,
-      timestamp: metrics.timestamp,
-      metadata: metrics.metadata
+      timestamp: metrics.timestamp.getTime()
     });
   }
 
@@ -245,9 +244,9 @@ class PerformanceMonitor {
         this.addAlert(alert);
         
         if (isCritical) {
-          console.error('🚨 Performance Alert:', alert);
+          performanceLogger.error('🚨 Performance Alert', alert);
         } else {
-          console.warn('⚠️ Performance Warning:', alert);
+          performanceLogger.warn('⚠️ Performance Warning', alert);
         }
       }
     } else {

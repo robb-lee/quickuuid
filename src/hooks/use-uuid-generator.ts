@@ -15,6 +15,7 @@ import { PerformanceUtils, PerformanceManager } from '@/lib/performance-utils';
 import { ValidationUtils } from '@/lib/validation-utils';
 import { useScreenReader } from '@/hooks/use-screen-reader';
 import { useDebounce, useDebouncedCallback } from '@/hooks/use-debounce';
+import { logger, storageLogger, clipboardLogger } from '@/lib/logger';
 
 interface CopyResult {
   type: 'single' | 'bulk';
@@ -96,7 +97,7 @@ export function useUUIDGenerator(initialConfig?: Partial<UUIDGeneratorConfig>): 
             setConfig(current => ({ ...current, ...savedPreferences }));
           }
         } catch (err) {
-          console.warn('Failed to load preferences:', err);
+          storageLogger.warn('Failed to load preferences', err);
         }
       };
 
@@ -110,7 +111,7 @@ export function useUUIDGenerator(initialConfig?: Partial<UUIDGeneratorConfig>): 
       try {
         await storageUtils.savePreferences(configToSave);
       } catch (err) {
-        console.warn('Failed to save preferences:', err);
+        storageLogger.warn('Failed to save preferences', err);
       }
     },
     500,
@@ -138,7 +139,7 @@ export function useUUIDGenerator(initialConfig?: Partial<UUIDGeneratorConfig>): 
             return uuidGenerator.generateUUIDs(config);
           } catch (error) {
             // Fallback: generate single UUID if batch fails
-            console.warn('Batch UUID generation failed, falling back to single UUID:', error);
+            logger.warn('Batch UUID generation failed, falling back to single UUID', 'UUID_GENERATOR', error);
             const fallbackUUIDs = await uuidGenerator.generateUUIDs({ ...config, count: 1 });
             return [fallbackUUIDs[0]];
           }
@@ -310,7 +311,7 @@ export function useUUIDGenerator(initialConfig?: Partial<UUIDGeneratorConfig>): 
         content: result.formattedOutput
       };
     } catch (err) {
-      console.error('Failed to copy to clipboard:', err);
+      clipboardLogger.error('Failed to copy UUIDs to clipboard', err);
       announceError('Failed to copy UUIDs to clipboard');
       return {
         type: 'bulk',
@@ -338,7 +339,7 @@ export function useUUIDGenerator(initialConfig?: Partial<UUIDGeneratorConfig>): 
         content: uuid
       };
     } catch (err) {
-      console.error('Failed to copy to clipboard:', err);
+      clipboardLogger.error('Failed to copy UUID to clipboard', err);
       announceError('Failed to copy UUID to clipboard');
       return {
         type: 'single',
